@@ -1,0 +1,12 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+}
+#messages {
+  color: white;
+  margin: 2em;
+  font-size: 2.5vw;
+  font-family: monospace;
+}

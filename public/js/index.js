@@ -1,6 +1,7 @@
 const socket = io();
 let userid = null;
 const v = document.querySelector('#video');
+const f = document.querySelector('#feedback');
 
 // --------------------------- socket
 
@@ -22,6 +23,7 @@ function sendMessage(msg){
 socket.on('feedback', (data) => {
   console.log("feedbback !");
   console.log(data);
+  f.innerHTML = `<p>— ${data}</p>`;
 });
 
 

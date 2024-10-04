@@ -41,28 +41,37 @@ io.on('connection', async (socket) => {
   
   // message
   socket.on('message', (msg) => {
-    console.log("MEssage !");
+    console.log("Message !");
     console.log(msg);
     io.emit('message', msg);
   });
 
-  // video
-  socket.on('video', (msg) => {
+  // file URL
+  socket.on('video', (url) => {
     console.log("Vidéo !");
-    console.log(msg);
-    io.emit('video', msg);
+    console.log(url);
+    io.emit('video', url);
   });
 
-  socket.on('special', (msg) => {
+  // message as object
+  socket.on('questionsreponses', (obj) => {
+    console.log("Questions !");
+    console.log(obj);
+    io.emit('questionsreponses', obj);
+  });
+
+  // special
+  socket.on('special', (something) => {
     console.log("Special !");
-    console.log(msg);
-    io.of("/special").to('/special').emit('special', msg);
+    console.log(something);
+    io.of("/special").to('/special').emit('special', something);
   });
 
   // disconnection
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
   // feeedback
   socket.on('feeedback', () => {
     console.log('feeedback');
@@ -86,10 +95,12 @@ io.of("/special").on("connection", (socket) => {
   });
 
 
-  // printing signal
+  // special signal
   socket.on('Specializing', (msg) => {
     console.log('Specializing !');
     console.log(msg);
+    // attempt to send message to a user identified by its userid
+    // msg = { userdid: …, data: … }
     io.to(msg.userid).emit('Received specializing', { }, (err, responses) => {
       console.log(err);
     });
