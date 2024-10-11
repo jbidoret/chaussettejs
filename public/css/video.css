@@ -1,0 +1,46 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background: #85db34;
+    overflow: hidden;
+}
+body:has(video[src="media/blank.mp4"]) {background: #000;}
+body:has(video[src="media/blank.mp4"])  #overlay { display: none; }
+
+.nocursor {
+    cursor: none;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* filter: grayscale(1) contrast(1.4); */
+    filter: contrast(1.8) saturate(1);
+    mix-blend-mode: hue;
+}
+
+#questions{
+    position: fixed;
+    bottom: 2em;
+    left: 2em;
+    max-width: 60vw;
+    font-size: 2.5vw;
+    color: white;
+}
+
+.question {
+    font-family: "Redaction_35";
+    font-weight: bold;
+}
+.answer {
+    font-family: "Redaction_35";
+    font-style: italic;
+}
+
+#overlay{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(55deg, rgba(189, 17, 17, .8), rgba(0,0,0,0));
+}
