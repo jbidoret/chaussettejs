@@ -9,7 +9,7 @@ import {writeFileSync} from "fs"
 // config
 const port = process.env.PORT || 3000;
 // const ip = process.env.IP || 'localhost';
-const ip = process.env.IP || '192.168.2.101';
+const ip = process.env.IP || '192.168.2.90';
 
 const app = express();
 app.use(express.static('public'));
@@ -41,37 +41,48 @@ io.on('connection', async (socket) => {
   
   // message
   socket.on('message', (msg) => {
-    console.log("Message !");
+    console.log("MEssage !");
     console.log(msg);
     io.emit('message', msg);
   });
 
-  // file URL
-  socket.on('video', (url) => {
+  // message
+  socket.on('question reponse', (msg) => {
+    console.log("Question/réponse !");
+    console.log(msg);
+    io.emit('question reponse', msg);
+  });
+
+  // age genre
+  socket.on('age genre"', (msg) => {
+    console.log("Age genre !");
+    console.log(msg);
+    io.emit('age genre"', msg);
+  });
+
+  // video
+  socket.on('video', (msg) => {
     console.log("Vidéo !");
-    console.log(url);
-    io.emit('video', url);
+    console.log(msg);
+    io.emit('video', msg);
   });
 
-  // message as object
-  socket.on('questionsreponses', (obj) => {
-    console.log("Questions !");
-    console.log(obj);
-    io.emit('questionsreponses', obj);
-  });
-
-  // special
-  socket.on('special', (something) => {
+  socket.on('special', (msg) => {
     console.log("Special !");
-    console.log(something);
-    io.of("/special").to('/special').emit('special', something);
+    console.log(msg);
+    io.of("/special").to('/special').emit('special', msg);
+  });
+
+  socket.on('algo', (msg) => {
+    console.log("Algo !");
+    console.log(msg);
+    io.of("/algo").to('/algo').emit('algo', msg);
   });
 
   // disconnection
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-
   // feeedback
   socket.on('feeedback', () => {
     console.log('feeedback');
@@ -80,27 +91,24 @@ io.on('connection', async (socket) => {
 
 
 
-io.of("/special").on("connection", (socket) => {
+io.of("/algo").on("connection", (socket) => {
   // print users
   const userId = socket.id;
-  console.log(`Special user (${userId}) is now connected`);
+  console.log(`Algo user (${userId}) is now connected`);
 
-  socket.join("/special");
+  socket.join("/algo");
 
-  io.of("/special").to("/special").emit("welcome", userId);
+  io.of("/algo").to("/algo").emit("welcome", userId);
  
   // disconnection
   socket.on('disconnect', () => {
-    console.log('Special user disconnected');
+    console.log('Algo user disconnected');
   });
 
-
-  // special signal
+  // printing signal
   socket.on('Specializing', (msg) => {
     console.log('Specializing !');
     console.log(msg);
-    // attempt to send message to a user identified by its userid
-    // msg = { userdid: …, data: … }
     io.to(msg.userid).emit('Received specializing', { }, (err, responses) => {
       console.log(err);
     });
